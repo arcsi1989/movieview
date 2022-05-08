@@ -17,7 +17,7 @@ Optional: Create a virtual or conda environment and activate it.
 moviewview$ pip install -e .
 ```
 
-2. Run the application using CLI interface - type `task3 -h` or `task3 --help`
+2. Run the application using CLI interface - type `task3 -h` or `task3 --help`. Command `task3 
 ```shell
 movieview$ export DATA_URL="https://raw.githubusercontent.com/WittmannF/imdb-tv-ratings/master/top-250-movie-ratings.csv"
 movieview$ export MODEL_TYPE="linear_model"
@@ -30,18 +30,26 @@ This requires that you have installed Docker and the docker engine is running.
 
 1. Build the Docker image
 ```shell
-movieview$ docker build -it movies_view_predictor .
+movieview$ docker build -t movies_view_predictor .
 ```
 
 2. Run the Docker image
 ```shell
 # url = "https://s3.amazonaws.com/products-42matters/test/biographies.list.gz"
 # local_computer_path = Local computer path which will be mounted to the container to store the output
-movieview$ docker run -e DATA_URL=<url> -v <local_computer_path>:/usr/src/data word_counter
+movieview$ docker run -e DATA_URL=<url> -v <local_computer_path>:/usr/src/data movies_view_predictor
 ```
 
 Or even easier. Configure the environment variables in `docker-compose.yml` and run:
 ```shell
 movieview$ docker-compose up
 ```
-If the image `word_counter` has not been built yet, this will happen automatically.
+If the image `movies_view_predictor` has not been built yet, this will happen automatically.
+
+
+## Extra
+A bash script is provided for (re)building the built docker container.
+
+```shell
+movieview$ source cicd/build_docker.sh build
+```

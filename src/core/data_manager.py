@@ -51,7 +51,6 @@ class MovieDataManager(DataManager):
 
         self._training_data = limited_data.iloc[:, 2:]
         self._inference_data = self.data[(self.data['view'].isna())].iloc[:, 2:-1]
-        print(self._inference_data)
 
     def get_training_data(self) -> Tuple[np.ndarray, np.ndarray]:
         """Gets the training data as a tuple - x and y"""
