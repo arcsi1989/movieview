@@ -1,0 +1,19 @@
+# -------------- Requirements for production --------------- #
+# Data storage / compression
+# pyarrow
+# python-snappy
+# fastparquet
+
+# File import
+pyyaml
+
+# Data science / array manipulation
+numpy
+pandas
+
+# Machine Learning
+scikit-learn
+xgboost
+
+# Utils
+click

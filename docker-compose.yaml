@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  moviesview:
+    build: . # Where to find the Dockerfile
+    image: "movies_view_predictor"
+    environment:
+      DATA_URL: "https://raw.githubusercontent.com/WittmannF/imdb-tv-ratings/master/top-250-movie-ratings.csv"
+      MODEL_TYPE: "linear_model"
+      MODEL_NAME: "LinearRegression"
