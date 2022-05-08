@@ -1,10 +1,7 @@
 from os import path
 from setuptools import setup, find_packages
 
-
-# TODO change src to actual package name
 from src import __version__
-
 
 # Project
 NAME = 'MoviesViewPredictor'
@@ -53,7 +50,7 @@ with open(path.join(this_directory, 'requirements/production.txt'), encoding='ut
 # Package definition
 setup(name=NAME,
       version=VERSION,
-      description='TODO Description of the project',  # TODO
+      description='Moview view predictort',
       url=HOMEPAGE,
       packages=find_packages(),
       author=AUTHORS,
@@ -68,7 +65,7 @@ setup(name=NAME,
       install_requires=INSTALL_REQUIREMENTS,
       entry_points={
           'console_scripts': [
-              'task3 = src.cli.cli:src_cli',  # TODO change actual package name
+              'task3 = src.cli.cli:src_cli',
           ]
       },
       include_package_data=True,
