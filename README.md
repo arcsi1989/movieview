@@ -17,12 +17,12 @@ Optional: Create a virtual or conda environment and activate it.
 moviewview$ pip install -e .
 ```
 
-2. Run the application
+2. Run the application using CLI interface - type `task3 -h` or `task3 --help`
 ```shell
 movieview$ export DATA_URL="https://raw.githubusercontent.com/WittmannF/imdb-tv-ratings/master/top-250-movie-ratings.csv"
 movieview$ export MODEL_TYPE="linear_model"
 movieview$ export MODEL_NAME="LinearRegression"
-movieview$ task3 run-pipeline --output_dir <path_to_output_dir>
+movieview$ task3 train-model --output_dir <path_to_output_dir>
 ```
 
 ## Building and running a Docker image locally

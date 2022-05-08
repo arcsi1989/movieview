@@ -1,1 +1,1 @@
-from src.core.data import manage_data
+from src.core.data_manager import MovieDataManager

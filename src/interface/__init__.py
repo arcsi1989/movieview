@@ -1,2 +1,2 @@
-from src.interface.data_loader import DataLoader
+from src.interface.data_manager import DataManager
 from src.interface.model import Model

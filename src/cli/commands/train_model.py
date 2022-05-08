@@ -10,7 +10,8 @@ from sklearn.model_selection import KFold
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 from src.cli import src_cli
-from src.core import manage_data
+from src.cli.commands.inference import inference_exec
+from src.core import MovieDataManager
 from src.core.sklearn_models import SklearnRegressionModel
 
 
@@ -24,12 +25,21 @@ def train_model(output_folder: str):
 
     print('LOG | Pipeline for training a model for movie view prediction is initiated')
 
-    print('LOG | Retrieve data from provided url and prorcess it for training')
+    print('LOG | Instantiate MovieDataManager')
+    url = os.getenv('DATA_URL')
+    if url is None:
+        raise ValueError("There is no 'DATA_URL environment variable defined")
+    else:
+        data_manager = MovieDataManager(config={'path_to_file': url})
 
+    print('LOG | MovieDataManager: Load data')
+    data_manager.load_data()
 
-    # Preprocess received data
-    print('LOG | Preprocessing data')
-    x, y = manage_data()
+    print('LOG | MovieDataManager: Pre-process data')
+    data_manager.process_data()
+
+    print('LOG | MovieDataManager: Request training  data')
+    x, y = data_manager.get_training_data()
 
     print('LOG | Training model')
     # Retrieve model type and model name
@@ -44,7 +54,7 @@ def train_model(output_folder: str):
     models = list()
 
     kf = KFold(n_splits=6)
-    for train_index, test_index in kf.split(np.concatenate((x,y), axis=1)):
+    for train_index, test_index in kf.split(np.concatenate((x, y), axis=1)):
         x_train, x_test = x[train_index], x[test_index]
         y_train, y_test = y[train_index], y[test_index]
 
@@ -56,7 +66,7 @@ def train_model(output_folder: str):
         # Storing the fold specific model and its performance evaluted on the test set
         models.append(model)
         scores['mse'].append(mean_squared_error(ref_y, pred_y))
-        scores['mae'].append( mean_absolute_error(ref_y, pred_y))
+        scores['mae'].append(mean_absolute_error(ref_y, pred_y))
         scores['r2'].append(r2_score(ref_y, pred_y))
 
         if model_type == 'linear_model':
@@ -87,3 +97,6 @@ def train_model(output_folder: str):
     print("Mean squared error: %.2f" % mean_squared_error(ref_y, pred_y))
     print("Mean absolute error: %.2f" % mean_absolute_error(ref_y, pred_y))
     print("Coefficient of determination: %.2f" % r2_score(ref_y, pred_y))
+
+    print('LOG | Perform inference on data without label')
+    inference_exec(model=model, data=data_manager.get_inference_data(), output_folder=output_folder)

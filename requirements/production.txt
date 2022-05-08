@@ -13,7 +13,6 @@ pandas
 
 # Machine Learning
 scikit-learn
-xgboost
 
 # Utils
 click
